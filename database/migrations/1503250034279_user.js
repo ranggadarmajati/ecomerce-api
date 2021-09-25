@@ -22,7 +22,7 @@ class UserSchema extends Schema {
       table.uuid('uuid').notNullable()
       table.string('name', 255).notNullable()
       table.string('initial', 50).notNullable()
-      table.boolean('is_deleted').default(0)
+      table.datetime('deleted_at')
       table.timestamps()
     })
 
@@ -44,6 +44,8 @@ class UserSchema extends Schema {
       table.timestamps()
     })
   }
+
+  
 
   down () {
     this.drop('users')

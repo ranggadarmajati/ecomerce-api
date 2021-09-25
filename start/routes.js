@@ -17,6 +17,12 @@
 const Env = use('Env');
 const Route = use('Route')
 
-Route.get('/', () => {
-  return { applicationName: Env.get('APP_NAME', 'e-comerce API'), version: '1.0.0', documentations:null, status: 'OK' }
-})
+Route.get('/', ({ response }) => {
+  let arr = { applicationName: Env.get('APP_NAME', 'e-comerce API'), version: '1.0.0', documentations: null, status: 'OK' }
+  response.Wrapper(
+    200,
+    true,
+    "Server running & API ready to consume",
+    arr
+  );
+});
