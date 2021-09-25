@@ -1,4 +1,5 @@
-<p align="center"><a href="#" target="_blank"><img src="https://i.ibb.co/3v7HN7g/courier-api.png" width="400"></a></p>
+<p align="center"><a href="#" target="_blank"><img src="https://i.ibb.co/LRZBfkL/ecomerce-api.png" width="400"></a></p>
+
 # Ecomerce-API
 
 This is the Ecomerce API Project.
