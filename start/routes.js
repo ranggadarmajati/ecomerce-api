@@ -14,8 +14,9 @@
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
+const Env = use('Env');
 const Route = use('Route')
 
 Route.get('/', () => {
-  return { greeting: 'Hello world in JSON' }
+  return { applicationName: Env.get('APP_NAME', 'e-comerce API'), version: '1.0.0', documentations:null, status: 'OK' }
 })

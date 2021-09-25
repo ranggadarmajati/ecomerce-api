@@ -1,5 +1,6 @@
 {
   "name": "ecomerce-api",
+  "author": "Rangga Darmajati",
   "version": "1.0.0",
   "adonis-version": "1.0.0",
   "description": "Ecomerce API Adonisjs boilerplate for API server with pre-configured JWT",
@@ -12,9 +13,8 @@
     "adonisjs",
     "adonis-app"
   ],
-  "author": "rangga darmajati",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@adonisjs/ace": "^5.0.8",
     "@adonisjs/auth": "^3.0.7",
