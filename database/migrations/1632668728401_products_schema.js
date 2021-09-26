@@ -42,6 +42,7 @@ class ProductsSchema extends Schema {
       table.enum('label', ['new', 'favorite', 'best_seller']).default('new')
       table.boolean('publish').default(false)
       table.boolean('someone_buy').default(false)
+      table.integer('view').default(0)
       table.datetime('deleted_at')
       table.timestamps()
     })

@@ -3,38 +3,6 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema')
 
-/**
- * // shippings
-Table shippings as s {
-  id int [pk, increment]
-  uuid varchar [unique]
-  order_id int [ref: > o.id]
-  logistic varchar [not null]
-  package varchar [not null]
-  price int
-  shipping_discount int [default: 0]
-  confirm boolean [default: 0]
-  created_at timestamp
-  updated_at timestamp
-}
-
-// shipping_destinations
-Table shipping_destinations as sd {
-  id int [pk, increment]
-  uuid varchar [unique]
-  shipping_id int [ref: > s.id]
-  province varchar [not null]
-  city varchar [not null]
-  district varchar [not null]
-  postal_code varchar [not null]
-  address text
-  recipient varchar [not null]
-  mobile_phone varchar [not null]
-  created_at timestamp
-  updated_at timestamp
-}
- */
-
 class ShippingsSchema extends Schema {
   up () {
     this.create('shippings', (table) => {
