@@ -43,6 +43,17 @@ class UserSchema extends Schema {
       table.string('token', 255).notNullable()
       table.timestamps()
     })
+
+    // create user address schema table
+    this.create('user_addresses', (table) => {
+      table.increments()
+      table.uuid('uuid').notNullable()
+      table.integer('user_id', 10).unsigned().references('id').inTable('users').notNullable()
+      table.string('name', 40).notNullable()
+      table.text('address').notNullable()
+      table.datetime('deleted_at')
+      table.timestamps()
+    })
   }
 
   
@@ -52,6 +63,7 @@ class UserSchema extends Schema {
     this.drop('roles')
     this.drop('user_roles')
     this.drop('user_verifications')
+    this.drop('user_addresses')
   }
 }
 
