@@ -22,6 +22,8 @@ class OrdersSchema extends Schema {
       table.datetime('payment_created_time')
       table.datetime('payment_expiry_time')
       table.datetime('payment_time_limit')
+      table.enum('status', ['new', 'canceled'])
+      table.boolean('return').default(false)
       table.timestamps()
     })
 
