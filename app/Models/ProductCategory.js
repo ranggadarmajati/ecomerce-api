@@ -18,6 +18,14 @@ class ProductCategory extends Model {
             }
         })
     }
+
+    category() {
+        return this.belongsTo('App/Models/Category', 'category_id', 'id')
+    }
+
+    product() {
+        return this.belongsTo('App/Models/Product', 'product_id', 'id')
+    }
 }
 
 module.exports = ProductCategory

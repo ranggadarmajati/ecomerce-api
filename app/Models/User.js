@@ -45,6 +45,26 @@ class User extends Model {
   user_addresses() {
     return this.hasMany('App/Models/UserAddress', 'id', 'user_id')
   }
+
+  user_verifications() {
+    return this.hasOne('App/Models/UserVerification')
+  }
+
+  wishlists() {
+    return this.hasMany('App/Models/Wishlist')
+  }
+
+  point_collections() {
+    return this.hasOne('App/Models/PointCollection')
+  }
+
+  point_recaps() {
+    return this.hasMany('App/Models/PointRecap')
+  }
+
+  orders() {
+    return this.hasOne('App/Models/Order')
+  }
 }
 
 module.exports = User

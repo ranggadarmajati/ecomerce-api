@@ -4,7 +4,7 @@
 const Model = use('Model')
 const { v4: uuidv4 } = require('uuid')
 
-class Whislist extends Model {
+class Wishlist extends Model {
     static boot() {
         super.boot()
 
@@ -18,6 +18,14 @@ class Whislist extends Model {
             }
         })
     }
+
+    product() {
+        return this.belongsTo('App/Models/Product')
+    }
+
+    user() {
+        return this.belongsTo('App/Models/User')
+    }
 }
 
-module.exports = Whislist
+module.exports = Wishlist

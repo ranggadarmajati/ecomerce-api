@@ -18,6 +18,10 @@ class Color extends Model {
             }
         })
     }
+
+    colors() {
+        return this.hasMany('App/Models/ProductColor')
+    }
 }
 
 module.exports = Color

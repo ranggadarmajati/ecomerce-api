@@ -18,6 +18,14 @@ class ProductColor extends Model {
             }
         })
     }
+
+    product() {
+        return this.belongsTo('App/Models/Product')
+    }
+
+    color() {
+        return this.belongsTo('App/Models/Color')
+    }
 }
 
 module.exports = ProductColor

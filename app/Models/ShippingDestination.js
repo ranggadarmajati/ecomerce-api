@@ -18,6 +18,10 @@ class ShippingDestination extends Model {
             }
         })
     }
+
+    shipping() {
+        return this.belongsTo('App/Models/Shipping')
+    }
 }
 
 module.exports = ShippingDestination

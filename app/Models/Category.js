@@ -18,6 +18,10 @@ class Category extends Model {
             }
         })
     }
+
+    product_categories() {
+        return this.hasMany('App/Models/ProductCategory', 'id', 'category_id')
+    }
 }
 
 module.exports = Category

@@ -18,6 +18,10 @@ class ProductSize extends Model {
             }
         })
     }
+
+    product() {
+        return this.belongsTo('App/Models/Product')
+    }
 }
 
 module.exports = ProductSize

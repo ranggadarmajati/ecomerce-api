@@ -18,6 +18,39 @@ class Product extends Model {
             }
         })
     }
+
+    product_categories() {
+        return this.hasMany('App/Models/ProductCategory')
+    }
+
+    product_colors() {
+        return this.hasMany('App/Models/ProductColor')
+    }
+
+    product_sizes() {
+        return this.hasMany('App/Models/ProductSize')
+    }
+
+    images() {
+        return this.hasMany('App/Models/Image')
+    }
+
+    product_measures() {
+        return this.hasOne('App/Models/ProductMeasure')
+    }
+
+    product_promotions() {
+        return this.hasMany('App/Models/ProductPromotion')
+    }
+
+    wishlists() {
+        return this.hasOne('App/Models/Wishlist')
+    }
+
+    order_details() {
+        return this.hasMany('App/Models/OrderDetail')
+    }
+
 }
 
 module.exports = Product

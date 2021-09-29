@@ -18,6 +18,14 @@ class OrderDetail extends Model {
             }
         })
     }
+
+    order() {
+        return this.belongsTo('App/Models/Order')
+    }
+
+    product() {
+        return this.belongsTo('App/Models/Product')
+    }
 }
 
 module.exports = OrderDetail

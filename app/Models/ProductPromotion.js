@@ -17,6 +17,14 @@ class ProductPromotion extends Model {
             }
         })
     }
+
+    product() {
+        return this.belongsTo('App/Models/Product')
+    }
+
+    promotion() {
+        return this.belongsTo('App/Models/Promotion')
+    }
 }
 
 module.exports = ProductPromotion

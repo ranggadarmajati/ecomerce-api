@@ -18,6 +18,10 @@ class Image extends Model {
             }
         })
     }
+
+    product() {
+        return this.belongsTo('App/Models/Product')
+    }
 }
 
 module.exports = Image

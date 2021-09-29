@@ -18,6 +18,22 @@ class Order extends Model {
             }
         })
     }
+
+    point_recaps() {
+        return this.hasOne('App/Models/PointRecap')
+    }
+
+    user() {
+        return this.belongsTo('App/Models/User')
+    }
+
+    order_details() {
+        return this.hasMany('App/Models/OrderDetail')
+    }
+
+    shippings() {
+        return this.hasOne('App/Models/Shipping')
+    }
 }
 
 module.exports = Order

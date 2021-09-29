@@ -18,6 +18,14 @@ class Shipping extends Model {
             }
         })
     }
+
+    order() {
+        return this.belongsTo('App/Models/Order')
+    }
+
+    shipping_destinations() {
+        return this.hasOne('App/Models/ShippingDestionation')
+    }    
 }
 
 module.exports = Shipping

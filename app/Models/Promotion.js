@@ -18,6 +18,10 @@ class Promotion extends Model {
             }
         })
     }
+
+    product_promotions() {
+        return this.hasOne('App/Models/ProductPromotion')
+    }
 }
 
 module.exports = Promotion
