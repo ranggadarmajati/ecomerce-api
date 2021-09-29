@@ -3,7 +3,8 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 const { v4: uuidv4 } = require('uuid');
-class About extends Model {
+
+class UserVerification extends Model {
     static boot() {
         super.boot()
 
@@ -17,6 +18,10 @@ class About extends Model {
             }
         })
     }
+
+    user() {
+        return this.belongsTo('App/Models/User', 'id', 'user_id')
+    }
 }
 
-module.exports = About
+module.exports = UserVerification

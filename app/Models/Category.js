@@ -3,7 +3,8 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 const { v4: uuidv4 } = require('uuid');
-class About extends Model {
+
+class Category extends Model {
     static boot() {
         super.boot()
 
@@ -19,4 +20,4 @@ class About extends Model {
     }
 }
 
-module.exports = About
+module.exports = Category

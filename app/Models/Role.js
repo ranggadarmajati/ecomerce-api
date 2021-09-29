@@ -3,7 +3,7 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 const { v4: uuidv4 } = require('uuid');
-class About extends Model {
+class Role extends Model {
     static boot() {
         super.boot()
 
@@ -17,6 +17,18 @@ class About extends Model {
             }
         })
     }
+
+    static get computed() {
+        return ['text']
+    }
+
+    getText(data) {
+        return data.name;
+    }
+
+    user_roles() {
+        return this.hasMany('App/Models/UserRole', 'id', 'role_id')
+    }
 }
 
-module.exports = About
+module.exports = Role
