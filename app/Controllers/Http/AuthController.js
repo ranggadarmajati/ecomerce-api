@@ -37,7 +37,10 @@ class AuthController {
                     let res = {
                         data: await HelperCrypto.Encrypt(data_string)
                     }
-                    
+
+                    let forLog = await HelperCrypto.Decrypt(res.data);
+                    console.log(JSON.parse(forLog))
+
                     return response.Wrapper(
                         200,
                         true,
@@ -62,6 +65,40 @@ class AuthController {
                 {}
             )
         }
+    }
+
+    async logout({ auth, response }) {
+        const apiToken = auth.getAuthHeader()
+        await auth
+            .authenticator('api')
+            .revokeTokens([apiToken])
+        return response.Wrapper(
+            200,
+            true,
+            "Logout successfully",
+            {}
+        )
+    }
+
+    async profile({ auth, response }) {
+        let user = await auth.getUser()
+        let user_role = await user.user_roles().fetch()
+        let role = await Role.findBy('id', user_role.role_id)
+        let auth_data = {
+            id: user.id,
+            uuid: user.uuid,
+            name: user.name,
+            email: user.email,
+            mobile_phone: user.mobile_phone,
+            role: role.name,
+            initial_role: role.initial
+        }
+        return response.Wrapper(
+            200,
+            true,
+            "Get Profile Successfully!",
+            auth_data
+        )
     }
 }
 
