@@ -43,7 +43,11 @@ const aceProviders = [
 |   { Route: 'Adonis/Src/Route' }
 |
 */
-const aliases = {}
+const aliases = {
+  Generate:'App/Helper/Generate',
+  Utils:'App/Helper/Utils',
+  HelperCrypto:'App/Helper/Crypto'
+}
 
 /*
 |--------------------------------------------------------------------------

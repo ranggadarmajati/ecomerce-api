@@ -26,3 +26,7 @@ Route.get('/', ({ response }) => {
     arr
   );
 });
+
+Route.group(() => {
+  Route.post('/', 'AuthController.login').as('login')
+}).prefix('api/v1/auth')

@@ -2,7 +2,7 @@
 
 /** @type {import('@adonisjs/framework/src/Env')} */
 const Env = use('Env')
-
+const moment = require('moment')
 module.exports = {
   /*
   |--------------------------------------------------------------------------
@@ -72,7 +72,10 @@ module.exports = {
     uid: 'email',
     password: 'password',
     options: {
-      secret: Env.get('APP_KEY')
+      secret: Env.get('APP_KEY'),
+      expiresIn:'1y',
+      issuer:'ecomerce-api',
+      audience: moment().format('YYYY-mm-dd hh:mm:ss')
     }
   },
 
