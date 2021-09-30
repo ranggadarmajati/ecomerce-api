@@ -18,8 +18,8 @@ class User extends Model {
       if (userInstance.dirty.password) {
         userInstance.password = await Hash.make(userInstance.password)
       }
-      if (!FieldInstance.uuid) {
-        FieldInstance.uuid = uuidv4();
+      if (!userInstance.uuid) {
+        userInstance.uuid = uuidv4();
       }
     })
   }
