@@ -16,7 +16,7 @@ module.exports = {
   | Available Serializers - lucid, database
   |
   */
-  authenticator: 'jwt',
+  authenticator: 'api',
 
   /*
   |--------------------------------------------------------------------------
@@ -75,7 +75,7 @@ module.exports = {
       secret: Env.get('APP_KEY'),
       expiresIn:'1y',
       issuer:'ecomerce-api',
-      audience: moment().format('YYYY-mm-dd hh:mm:ss')
+      audience: moment().format('YYYY-MM-DD')
     }
   },
 
