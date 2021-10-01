@@ -1,0 +1,31 @@
+@layout('mails.master')
+@section('content')
+  <tr>
+    <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+      <div style="font-family:helvetica;font-size:18px;line-height:1;text-align:left;color:#000000;">Hello {{ fullname }},</div>
+    </td>
+  </tr>
+  @if(activationKey)
+  <tr>
+    <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+      <div style="font-family:helvetica;font-size:18px;line-height:1;text-align:left;color:#000000;">For Your verification email, please clik link/button below:</div>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+      <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:20px;font-weight:bold;line-height:1;text-align:center;color:#000000;"><a style="display:inline-block;background:#414141;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:3px;" href="{{ URI_ACTIVATION }}"></a></div>
+    </td>
+  </tr>
+  @else
+  <tr>
+    <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+      <div style="font-family:helvetica;font-size:18px;line-height:1;text-align:left;color:#000000;">Your Forgot Password, Verification Code:</div>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+      <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:20px;font-weight:bold;line-height:1;text-align:center;color:#000000;">{{ forgot_password_token }}</div>
+    </td>
+  </tr>
+  @endif
+@endsection
