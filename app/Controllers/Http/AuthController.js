@@ -1,8 +1,15 @@
 'use strict'
+const Env = use('Env')
+const Event = use('Event')
+const Database = use('Database')
 const User = use('App/Models/User')
 const Role = use('App/Models/Role')
+const UserRole = use('App/Models/UserRole')
 const UserVerification = use('App/Models/UserVerification')
 const HelperCrypto = use('HelperCrypto')
+const Generate = use('Generate')
+const UserToken = use('App/Models/Token')
+const Utils = use('App/Helper/Utils')
 class AuthController {
     async login({ auth, request, response }) {
         const { email, password } = request.all()
@@ -99,6 +106,121 @@ class AuthController {
             "Get Profile Successfully!",
             auth_data
         )
+    }
+
+    async register({ request, response}) {
+        let { name, mobile_phone, email, password } = request.all()
+        const trx = await Database.beginTransaction()
+        let role = await Role.findBy('initial', 'c')
+        try {
+            const user = new User()
+            user.name = name
+            user.mobile_phone = mobile_phone.toString().substring(0, 1) === '0' ? Utils.replacePhoneNumber(mobile_phone) : mobile_phone
+            user.email = email
+            user.password = password
+            await user.save(trx)
+            const user_role = new UserRole()
+            user_role.role_id = role.id
+            await user.user_roles().save(user_role, trx)
+            
+            let activationKey = Generate.activationKey()
+            let urlActivation = `${Env.get('APP_URL')}/api/v1/auth/activation/${activationKey}`
+            let userDataObject = {
+                name: name,
+                email: email,
+                activationKey,
+                URI_ACTIVATION: urlActivation,
+                subject_email: 'Email Verification'
+            }
+            Event.fire('new::user', userDataObject)
+            const user_verification = new UserVerification()
+            user_verification.token = activationKey
+            await user.user_verifications().save(user_verification, trx)
+            await trx.commit()
+
+            return response.Wrapper(
+                201,
+                true,
+                'Register Successfully, Please check your email to verifications!'
+            )
+        } catch (error) {
+            console.log('error register :', error)
+            await trx.rollback()
+            return response.Wrapper(
+                500,
+                false,
+                error.message
+            )
+        }
+    }
+
+    async activation({ response, params, view }){
+        let { activationKey } = params
+        let userVerification = await UserVerification.findBy('token', activationKey)
+        if(userVerification) {
+            const trx = await Database.beginTransaction()
+            try {
+                await userVerification.delete(trx)
+                await trx.commit()
+                return view.render('commons.activation', { url_web: Env.get('FRONTEND_URL', 'http://localhost:3000') })
+            } catch (error) {
+                await trx.rollback()
+                return response.Wrapper(
+                    500,
+                    false,
+                    error.message
+                )
+            }
+        } else {
+            return response.Wrapper(
+                404,
+                false,
+                'Invalid Activation key!'
+            )
+        }
+    }
+
+    async forgotPasword({ request, response }) {
+        const { email } = request.all()
+        let user = await User.findBy('email', email)
+        if (!user) {
+            return response.Wrapper(
+                404,
+                false,
+                "Email address not found!"
+            )
+        }
+        const token = Generate.numericGenerate();
+        const trx = await Database.beginTransaction();
+        try {
+            let userToken = new UserToken()
+            userToken.user_id = user.id
+            userToken.token = token
+            userToken.type = 'forgot_password_token'
+            userToken.is_revoked = false
+            await userToken.save(trx)
+            await trx.commit()
+            let userDataObject = {
+                fullname: user.name,
+                email: user.email,
+                forgot_password_token: token,
+                subject_email: 'Forgot Password | Verification Code: ' + token
+            }
+            Event.fire('forgot_password::user', userDataObject)
+            return response.Wrapper(
+                200,
+                true,
+                `Verify code has been send to your email address!`
+            )
+        } catch (error) {
+            console.log("forgotPassword: ", error)
+            await trx.rollback()
+            return response.Wrapper(
+                500,
+                false,
+                error.message
+            )
+        }
     }
 }
 
