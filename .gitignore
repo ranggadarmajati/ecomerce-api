@@ -7,5 +7,8 @@ tmp
 # Environment variables, never commit this file
 .env
 
+# yarn error
+yarn-error.log
+
 # The development sqlite file
 database/*.sqlite
