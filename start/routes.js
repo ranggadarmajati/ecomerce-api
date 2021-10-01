@@ -28,10 +28,12 @@ Route.get('/', ({ response }) => {
 });
 
 Route.group(() => {
-  Route.post('/', 'AuthController.login').as('auth/login')
+  Route.post('/', 'AuthController.login').as('auth/login').validator('LoginRequest')
   Route.post('/logout', 'AuthController.logout').as('auth/logout').middleware(['apiAuth'])
   Route.get('/', 'AuthController.profile').as('auth/profile').middleware(['apiAuth'])
-  Route.post('/register', 'AuthController.register').as('auth/register')
+  Route.post('/register', 'AuthController.register').as('auth/register').validator('RegisterRequest')
   Route.get('/activation/:activationKey', 'AuthController.activation').as('auth/activation')
-  Route.post('/forgot', 'AuthController.forgotPasword').as('auth/fargotPassword')
+  Route.post('/forgot', 'AuthController.forgotPasword').as('auth/forgotPassword').validator('ForgotRequest')
+  Route.post('/verification', 'AuthController.forgotVerification').as('auth/verification').validator('ForgotVerification')
+  Route.post('/resetpassword', 'AuthController.resetPassword').as('auth/resetpassword').validator('ResetPasswordRequest')
 }).prefix('api/v1/auth')
