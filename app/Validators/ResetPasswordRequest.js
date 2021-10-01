@@ -16,6 +16,7 @@ class ResetPasswordRequest {
 
   get rules() {
     return {
+      token: 'required',
       password: 'required|confirmed|min:6|max:24'
     }
   }

@@ -35,5 +35,5 @@ Route.group(() => {
   Route.get('/activation/:activationKey', 'AuthController.activation').as('auth/activation')
   Route.post('/forgot', 'AuthController.forgotPasword').as('auth/forgotPassword').validator('ForgotRequest')
   Route.post('/verification', 'AuthController.forgotVerification').as('auth/verification').validator('ForgotVerification')
-  Route.post('/resetpassword', 'AuthController.resetPassword').as('auth/resetpassword').validator('ResetPasswordRequest')
+  Route.post('/reset/:uuid/password', 'AuthController.resetPassword').as('auth/resetpassword').validator('ResetPasswordRequest')
 }).prefix('api/v1/auth')
