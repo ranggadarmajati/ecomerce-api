@@ -31,4 +31,7 @@ Route.group(() => {
   Route.post('/', 'AuthController.login').as('auth/login')
   Route.post('/logout', 'AuthController.logout').as('auth/logout').middleware(['apiAuth'])
   Route.get('/', 'AuthController.profile').as('auth/profile').middleware(['apiAuth'])
+  Route.post('/register', 'AuthController.register').as('auth/register')
+  Route.get('/activation/:activationKey', 'AuthController.activation').as('auth/activation')
+  Route.post('/forgot', 'AuthController.forgotPasword').as('auth/fargotPassword')
 }).prefix('api/v1/auth')
