@@ -37,3 +37,21 @@ Route.group(() => {
   Route.post('/verification', 'AuthController.forgotVerification').as('auth/verification').validator('ForgotVerification')
   Route.post('/reset/:uuid/password', 'AuthController.resetPassword').as('auth/resetpassword').validator('ResetPasswordRequest')
 }).prefix('api/v1/auth')
+
+// admin route
+// category
+Route.group(() => {
+  Route.get('/', 'CategoryController.index').as('admin/category')
+  Route.get('/:id/show', 'CategoryController.show').as('admin/category/:id')
+  Route.get('/query', 'CategoryController.getByQuery').as('admin/category/query')
+}).prefix('api/v1/admin/category').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
+// end category
+
+// color
+Route.group(() => {
+  Route.get('/', 'ColorController.index').as('admin/color')
+  Route.get('/:id/show', 'ColorController.show').as('admin/color/:id')
+  Route.get('/query', 'ColorController.getByQuery').as('admin/color/query')
+}).prefix('api/v1/admin/color').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
+// end color
+// end admin route
