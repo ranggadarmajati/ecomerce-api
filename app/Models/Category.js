@@ -22,6 +22,16 @@ class Category extends Model {
     product_categories() {
         return this.hasMany('App/Models/ProductCategory', 'id', 'category_id')
     }
+
+    static scopeHasCategory(query, request){
+        let { search } = request.all()
+        return query.where(function(){
+            if (search) {
+                this.whereRaw('lower(name) like ?', '%' + `${search.toLowerCase()}` + '%')
+            }
+        })
+    }
+
 }
 
 module.exports = Category

@@ -22,6 +22,15 @@ class Color extends Model {
     colors() {
         return this.hasMany('App/Models/ProductColor')
     }
+
+    static scopeHasColor(query, request){
+        let { search } = request.all()
+        return query.where(function(){
+            if (search) {
+                this.whereRaw('lower(name) like ?', '%' + `${search.toLowerCase()}` + '%')
+            }
+        })
+    }
 }
 
 module.exports = Color
