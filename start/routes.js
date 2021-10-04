@@ -42,6 +42,7 @@ Route.group(() => {
 // category
 Route.group(() => {
   Route.get('/', 'CategoryController.index').as('admin/category')
+  Route.post('/', 'CategoryController.store').as('admin/category/store').validator('CategoryRequest')
   Route.get('/:id/show', 'CategoryController.show').as('admin/category/:id')
   Route.get('/query', 'CategoryController.getByQuery').as('admin/category/query')
 }).prefix('api/v1/admin/category').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
@@ -55,3 +56,19 @@ Route.group(() => {
 }).prefix('api/v1/admin/color').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
 // end color
 // end admin route
+
+// assets load
+Route.get('/uploads/images/:directory/:filename', ({ response, request, params }) => {
+  const Helpers = use('Helpers')
+  let { directory, filename } = params
+  if (request.header("upgrade-insecure-requests")) {
+    return response.Wrapper(
+      406,
+      false,
+      'Not Acceptable. please access on web app or mobile app',
+      'denied'
+    )
+  } else {
+    return response.download(Helpers.publicPath(`uploads/images/${directory}/${filename}`))
+  }
+})
