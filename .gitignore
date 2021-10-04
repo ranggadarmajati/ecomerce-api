@@ -6,6 +6,8 @@ tmp
 
 # Environment variables, never commit this file
 .env
+.github_token
+.token_github
 
 # yarn error
 yarn-error.log
