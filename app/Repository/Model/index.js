@@ -25,6 +25,22 @@ class Model extends Presenter {
     showQuery(request) {
         return this.getQuery(request);
     }
+
+    create(obj) {
+        return this.getCreate(obj);
+    }
+
+    merge(id, obj) {
+        return this.getMerge(id, obj);
+    }
+
+    delete(id) {
+        return this.getDelete(id);
+    }
+
+    deleteBy(field, value) {
+        return this.getDeleteBy(field, value);
+    }
 }
 
 module.exports = Model;
