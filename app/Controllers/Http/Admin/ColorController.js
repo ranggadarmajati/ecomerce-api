@@ -17,7 +17,7 @@ class ColorController {
     async show({ response, params }) {
         let { id } = params
         let color = new ModelRepository(Color)
-        let data = await color.show(id)
+        let data = await color.showBy('uuid', id)
         return response.Wrapper(
             200,
             true,
