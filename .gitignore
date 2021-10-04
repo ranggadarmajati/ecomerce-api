@@ -12,3 +12,6 @@ yarn-error.log
 
 # The development sqlite file
 database/*.sqlite
+
+#public uploads
+public/uploads/
