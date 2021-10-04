@@ -1,5 +1,5 @@
 'use strict'
-
+const Database = use('Database');
 class Presenter {
     constructor(model) {
         this.modelname = model;
@@ -30,6 +30,63 @@ class Presenter {
             }
         }).orderBy(order.column, order.sort).paginate(page != undefined ? page : 1, limit != undefined ? parseInt(limit) : 10)
 
+    }
+
+    async getCreate(obj) {
+        const trx = await Database.beginTransaction();
+        try {
+            const data = await this.modelname.create(obj, trx);
+            await trx.commit();
+            return data;
+        } catch (error) {
+            console.log("error getCreate:", error)
+            await trx.rollback()
+            return false;
+        }
+    }
+
+    async getMerge(id, obj) {
+        const trx = await Database.beginTransaction();
+        try {
+            const data = this.modelname.find(id);
+            data.merge(obj);
+            await data.save(trx);
+            await trx.commit();
+            return data;
+        } catch (error) {
+            console.log("error getMerge:", error)
+            await trx.rollback();
+            const data = this.modelname.find(id);
+            return data;
+        }
+    }
+
+    async getDelete(id) {
+        const trx = await Database.beginTransaction();
+        try {
+            let data = await this.modelname.find(id);
+            await data.delete(trx);
+            await trx.commit();
+            return true;
+        } catch (error) {
+            console.log("error getDelete:", error);
+            await trx.rollback();
+            return false;
+        }
+    }
+
+    async getDeleteBy(field, value) {
+        const trx = await Database.beginTransaction();
+        try {
+            let data = await this.modelname.findBy(field, value);
+            await data.delete(trx);
+            await trx.commit();
+            return true;
+        } catch (error) {
+            console.log("error getDeleteBy:", error);
+            await trx.rollback();
+            return false;
+        }
     }
 }
 
