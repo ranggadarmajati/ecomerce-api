@@ -56,6 +56,14 @@ Route.group(() => {
   Route.get('/query', 'ColorController.getByQuery').as('admin/color/query')
 }).prefix('api/v1/admin/color').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
 // end color
+
+// courier
+Route.group(() => {
+  Route.get('/', 'CourierController.index').as('admin/courier')
+  Route.get('/query', 'CourierController.getByQuery').as('admin/courier/query')
+  Route.get('/:id/activeDeactive', 'CourierController.activeDeactive').as('admin/courier/activeDeactive')
+}).prefix('api/v1/admin/courier').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
+// end courier
 // end admin route
 
 // assets load
