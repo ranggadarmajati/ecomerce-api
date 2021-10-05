@@ -16,9 +16,7 @@ class RouteController {
         let get_route = await Route.list()
         let selected_routes = []
         for (const iterator of get_route) {
-            console.log(iterator.name)
-            if(iterator.name !== '/' && iterator.name !== 'routes' && iterator.name !== 'uploads/images' && iterator.name !== 'css' && iterator.name !== 'js' && iterator.name !== 'fonts') selected_routes.push(iterator)
-           
+            if (iterator.name !== '/' && iterator.name !== 'routes' && iterator.name !== 'uploads/images' && iterator.name !== 'css' && iterator.name !== 'js' && iterator.name !== 'fonts') selected_routes.push(iterator)
         }
         let logo_img_url = `${Env.get('APP_URL')}/uploads/images/about/about.png`
         return view.render('routes.table-route', { get_route: selected_routes, logo_img_url })
