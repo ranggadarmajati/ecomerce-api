@@ -1,4 +1,7 @@
 'use strict'
+
+const moment = require("moment");
+
 const Database = use('Database');
 class Presenter {
     constructor(model) {
@@ -88,6 +91,21 @@ class Presenter {
             return true;
         } catch (error) {
             console.log("error getDeleteBy:", error);
+            await trx.rollback();
+            return false;
+        }
+    }
+
+    async softDelete(id) {
+        const trx = await Database.beginTransaction();
+        try {
+            let data = await this.modelname.findBy('uuid', id);
+            data.deleted_at = moment().format('YYYY-mm-dd hh:mm:ss');
+            await data.save(trx);
+            await trx.commit();
+            return true;
+        } catch (error) {
+            console.log("error softDelete:", error);
             await trx.rollback();
             return false;
         }
