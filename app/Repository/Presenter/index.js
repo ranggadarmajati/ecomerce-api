@@ -13,8 +13,13 @@ class Presenter {
         return this.modelname.find(id);
     }
 
-    getBy(field, value) {
-        return this.modelname.findBy(field, value);
+    async getBy(field, value) {
+        try {
+            return await this.modelname.findBy(field, value); 
+        } catch (error) {
+            return false;
+        }
+        
     }
 
     getTotalRow() {
@@ -48,7 +53,7 @@ class Presenter {
     async getMerge(id, obj) {
         const trx = await Database.beginTransaction();
         try {
-            const data = this.modelname.find(id);
+            let data = await this.modelname.findBy('uuid', id);
             data.merge(obj);
             await data.save(trx);
             await trx.commit();
@@ -56,8 +61,7 @@ class Presenter {
         } catch (error) {
             console.log("error getMerge:", error)
             await trx.rollback();
-            const data = this.modelname.find(id);
-            return data;
+            return false;
         }
     }
 
