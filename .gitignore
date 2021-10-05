@@ -16,4 +16,5 @@ yarn-error.log
 database/*.sqlite
 
 #public uploads
-public/uploads/
+public/uploads/images/category
+public/uploads/images/product

@@ -1,0 +1,46 @@
+@layout('routes.master')
+@section('title')
+    Ecomerce Api Route List
+@endsection
+@section('page-header')
+    <div class="text-center"><img height="auto" width="320" src="{{ assetsUrl('uploads/images/about/logo.png') }}" alt="ecomerce-api" /></div>
+    <p class="text-center"><b>Route List</b></p>
+@endsection
+@section('content')
+    <div class="table">
+        <table id="route-table" class="table-bordered table-condensed table-responsive">
+            <thead>
+        	    <tr>
+        	    	<th>Method</th>
+        	    	<th>URI</th>
+        	    	<th>Name</th>
+        	    	<th>Action</th>
+        	    	<th>Middleware</th>
+        	    </tr>
+            </thead>
+            <tbody>
+            	@each(route in get_route)
+                    <tr>
+                        <td> {{ route.verbs }} </td>
+                        <td> {{ route._route }} </td>
+                        <td> {{ route.name }} </td>
+                        <td> {{ route.handler }} </td>
+                        <td> {{ route.middlewareList }} </td>
+                    </tr>
+                @endeach
+            </tbody>
+        </table>
+    </div>
+@endsection
+@section('script-js')
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#route-table').dataTable({
+                lengthMenu: [
+                    [ 10, 20, -1 ],
+                    [ '10', '20', 'All' ]
+                ],
+            });
+        });
+    </script>
+@endsection

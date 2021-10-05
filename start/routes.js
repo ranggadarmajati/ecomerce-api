@@ -14,18 +14,16 @@
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-const Env = use('Env');
 const Route = use('Route')
 
-Route.get('/', ({ response }) => {
-  let arr = { applicationName: Env.get('APP_NAME', 'e-comerce API'), version: '1.0.0', documentations: null, status: 'OK' }
-  response.Wrapper(
-    200,
-    true,
-    "Server running & API ready to consume",
-    arr
-  );
-});
+Route.get('/', 'RouteController.index');
+Route.get('routes', 'RouteController.getRoute').as('routes')
+// assets load
+Route.get('/uploads/images/:directory/:filename', 'AssetController.uploadImages').as('uploads/images')
+Route.get('/css/:filename', 'AssetController.css').as('css')
+Route.get('/js/:filename', 'AssetController.js').as('js')
+Route.get('/fonts/:filename', 'AssetController.fonts').as('fonts')
+// end assets load
 
 Route.group(() => {
   Route.post('/', 'AuthController.login').as('auth/login').validator('LoginRequest')
@@ -43,7 +41,7 @@ Route.group(() => {
 Route.group(() => {
   Route.get('/', 'CategoryController.index').as('admin/category')
   Route.post('/', 'CategoryController.store').as('admin/category/store').validator('CategoryRequest')
-  Route.patch('/:id/update', 'CategoryController.update').as('admin/category/update')
+  Route.patch('/:id/update', 'CategoryController.update').as('admin/category/update').validator('CategoryUpdateRequest')
   Route.get('/:id/show', 'CategoryController.show').as('admin/category/:id')
   Route.get('/query', 'CategoryController.getByQuery').as('admin/category/query')
 }).prefix('api/v1/admin/category').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
@@ -64,20 +62,11 @@ Route.group(() => {
   Route.get('/:id/activeDeactive', 'CourierController.activeDeactive').as('admin/courier/activeDeactive')
 }).prefix('api/v1/admin/courier').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
 // end courier
-// end admin route
 
-// assets load
-Route.get('/uploads/images/:directory/:filename', ({ response, request, params }) => {
-  const Helpers = use('Helpers')
-  let { directory, filename } = params
-  if (request.header("upgrade-insecure-requests")) {
-    return response.Wrapper(
-      406,
-      false,
-      'Not Acceptable. please access on web app or mobile app',
-      'denied'
-    )
-  } else {
-    return response.download(Helpers.publicPath(`uploads/images/${directory}/${filename}`))
-  }
-})
+// about
+Route.group(() => {
+  Route.get('/', 'AboutController.index').as('admin/about')
+  Route.patch('/', 'AboutController.update').as('admin/about/update').validator('AboutUpdateRequest')
+}).prefix('api/v1/admin/about').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
+//end about
+// end admin route
