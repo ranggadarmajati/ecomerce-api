@@ -43,6 +43,7 @@ Route.group(() => {
 Route.group(() => {
   Route.get('/', 'CategoryController.index').as('admin/category')
   Route.post('/', 'CategoryController.store').as('admin/category/store').validator('CategoryRequest')
+  Route.patch('/:id/update', 'CategoryController.update').as('admin/category/update')
   Route.get('/:id/show', 'CategoryController.show').as('admin/category/:id')
   Route.get('/query', 'CategoryController.getByQuery').as('admin/category/query')
 }).prefix('api/v1/admin/category').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
