@@ -45,6 +45,14 @@ class Model extends Presenter {
     softDelete(id) {
         return this.softDelete(id);
     }
+
+    first() {
+        return this.firstRow();
+    }
+
+    last() {
+        return this.lastRow();
+    }
 }
 
 module.exports = Model;

@@ -18,11 +18,11 @@ class Presenter {
 
     async getBy(field, value) {
         try {
-            return await this.modelname.findBy(field, value); 
+            return await this.modelname.findBy(field, value);
         } catch (error) {
             return false;
         }
-        
+
     }
 
     getTotalRow() {
@@ -38,6 +38,14 @@ class Presenter {
             }
         }).orderBy(order.column, order.sort).paginate(page != undefined ? page : 1, limit != undefined ? parseInt(limit) : 10)
 
+    }
+
+    firstRow() {
+        return this.modelname.firstOrFail();
+    }
+
+    lastRow() {
+        return this.modelname.last();
     }
 
     async getCreate(obj) {
