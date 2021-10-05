@@ -1,4 +1,5 @@
 'use strict'
+const fs = require('fs');
 const Database = use('Database')
 const Helpers = use('Helpers')
 const Category = use('App/Models/Category')
@@ -32,10 +33,17 @@ class CategoryController {
         let { id } = params
         let category = new ModelRepository(Category)
         let data = await category.showBy('uuid', id)
+        if (!data) {
+            return response.Wrapper(
+                404,
+                false,
+                "Category not found!"
+            )
+        }
         return response.Wrapper(
             200,
             true,
-            "Get Color Data By id Successfully",
+            "Get Category Data By id Successfully",
             data
         )
     }
@@ -62,7 +70,8 @@ class CategoryController {
         let obj = {
             name: name,
             slug: slug,
-            image: `${request.protocol()}://${request.header('host')}/uploads/images/category/${filename}`
+            image: filename,
+            image_url: `${request.protocol()}://${request.header('host')}/uploads/images/category/${filename}`
         }
         try {
             let store = await category.create(obj)
@@ -86,6 +95,84 @@ class CategoryController {
                 500,
                 false,
                 "Something went wrong, please try again later!"
+            )
+        }
+    }
+
+    async update({ response, request, params }) {
+        let category = new ModelRepository(Category)
+        let { id } = params
+        const { name } = request.all()
+        let slug = name.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
+        let data = await category.showBy('uuid', id)
+        if (!data) {
+            return response.Wrapper(
+                404,
+                false,
+                "Category not found!"
+            )
+        }
+        if (request.file('category_pic')) {
+            const removeFile = Helpers.promisify(fs.unlink)
+            const imgFile = Helpers.publicPath(`uploads/images/category/${data.image}`)
+            try {
+                await removeFile(imgFile)
+            } catch (error) {
+                console.log('Error delete image file', error.message)
+            }
+            const categoryPic = request.file('category_pic', {
+                types: ['image'],
+                size: '5mb',
+                extnames: ['png', 'jpg', 'jpeg']
+            });
+            let extension = categoryPic.extname
+            let filename = `${slug}.${extension}`;
+            await categoryPic.move(Helpers.publicPath('uploads/images/category'), {
+                name: filename,
+                overwrite: true
+            })
+
+            if (!categoryPic.moved()) {
+                return profilePic.error()
+            }
+            let updateData = {
+                name: name,
+                slug: slug,
+                image: filename,
+                image_url: `${request.protocol()}://${request.header('host')}/uploads/images/category/${filename}`
+            }
+            let updateRes = await category.merge(id, updateData);
+            if (!updateRes) {
+                return response.Wrapper(
+                    500,
+                    false,
+                    "Something went wrong, please try again later!"
+                )
+            }
+            return response.Wrapper(
+                200,
+                true,
+                'Update category data successfully!',
+                updateRes
+            )
+        } else {
+            let updateData = {
+                name: name,
+                slug: slug
+            }
+            let updateRes = await category.merge(id, updateData);
+            if (!updateRes) {
+                return response.Wrapper(
+                    500,
+                    false,
+                    "Something went wrong, please try again later!"
+                )
+            }
+            return response.Wrapper(
+                200,
+                true,
+                'Update category data successfully!',
+                updateRes
             )
         }
     }
