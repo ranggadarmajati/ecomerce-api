@@ -35,7 +35,6 @@ class ColorController {
             'Get Color data successfully!',
             data
         )
-
     }
 }
 
