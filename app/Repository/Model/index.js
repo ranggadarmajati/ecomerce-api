@@ -41,6 +41,10 @@ class Model extends Presenter {
     deleteBy(field, value) {
         return this.getDeleteBy(field, value);
     }
+
+    softDelete(id) {
+        return this.softDelete(id);
+    }
 }
 
 module.exports = Model;
