@@ -69,4 +69,15 @@ Route.group(() => {
   Route.patch('/', 'AboutController.update').as('admin/about/update').validator('AboutUpdateRequest')
 }).prefix('api/v1/admin/about').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
 //end about
+
+// banner
+Route.group(() => {
+  Route.get('/', 'BannerController.index').as('admin/banner')
+  Route.get('/query', 'BannerController.getByQuery').as('admin/banner/query')
+  Route.get('/:id/show', 'BannerController.show').as('admin/banner/show')
+  Route.post('/', 'BannerController.store').as('admin/banner/store').validator('BannerRequest')
+  Route.patch('/:id/update', 'BannerController.update').as('admin/banner/update').validator('BannerUpdateRequest')
+  Route.delete('/:id/delete', 'BannerController.delete').as('admin/banner/delete')
+}).prefix('api/v1/admin/banner').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
+// end banner
 // end admin route
