@@ -104,15 +104,15 @@ class CategoryController {
         let { id } = params
         const { name } = request.all()
         let slug = name.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
-        let data = await category.showBy('uuid', id)
-        if (!data) {
-            return response.Wrapper(
-                404,
-                false,
-                "Category not found!"
-            )
-        }
         if (request.file('category_pic')) {
+            let data = await category.showBy('uuid', id)
+            if (!data) {
+                return response.Wrapper(
+                    404,
+                    false,
+                    "Category not found!"
+                )
+            }
             const removeFile = Helpers.promisify(fs.unlink)
             const imgFile = Helpers.publicPath(`uploads/images/category/${data.image}`)
             try {
