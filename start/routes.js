@@ -107,4 +107,14 @@ Route.group(() => {
   Route.patch('/:id/update', 'TermsOfUseController.update').as('admin/termsofuse/update').validator('FaqRequest')
 }).prefix('api/v1/admin/termsofuse').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
 // end terms of use
+
+// privacy police
+Route.group(() => {
+  Route.get('/', 'PrivacyPoliceController.index').as('admin/privacypolice')
+  Route.get('/query', 'PrivacyPoliceController.getQuery').as('admin/privacypolice/query')
+  Route.get('/:id/show', 'PrivacyPoliceController.show').as('admin/privacypolice/show')
+  Route.post('/', 'PrivacyPoliceController.store').as('admin/privacypolice/store').validator('FaqRequest')
+  Route.patch('/:id/update', 'PrivacyPoliceController.update').as('admin/privacypolice/update').validator('FaqRequest')
+}).prefix('api/v1/admin/privacypolice').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
+// end privacy police
 // end admin route
