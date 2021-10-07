@@ -53,6 +53,10 @@ class Model extends Presenter {
     last() {
         return this.lastRow();
     }
+
+    truncate() {
+        return this.getTruncate();
+    }
 }
 
 module.exports = Model;

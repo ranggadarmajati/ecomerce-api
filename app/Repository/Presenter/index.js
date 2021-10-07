@@ -118,6 +118,10 @@ class Presenter {
             return false;
         }
     }
+
+    getTruncate() {
+        return this.modelname.truncate();
+    }
 }
 
 module.exports = Presenter;

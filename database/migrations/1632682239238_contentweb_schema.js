@@ -31,7 +31,7 @@ class ContentwebSchema extends Schema {
     this.create('contacts', (table) => {
       table.increments()
       table.uuid('uuid').notNullable()
-      table.string('map_iframe', 255)
+      table.text('map_iframe')
       table.float('longitude', 255).notNullable()
       table.float('latitude', 255).notNullable()
       table.text('address')
