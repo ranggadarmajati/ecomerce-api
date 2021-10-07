@@ -5,6 +5,10 @@ const Model = use('Model')
 const { v4: uuidv4 } = require('uuid')
 
 class TermsOfus extends Model {
+    static get table() {
+        return 'terms_of_uses'
+    }
+
     static boot() {
         super.boot()
 

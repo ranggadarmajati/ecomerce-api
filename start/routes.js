@@ -97,4 +97,14 @@ Route.group(() => {
   Route.patch('/:id/update', 'FaqController.update').as('admin/faq/update').validator('FaqRequest')
 }).prefix('api/v1/admin/faq').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
 // end faq
+
+// terms of use
+Route.group(() => {
+  Route.get('/', 'TermsOfUseController.index').as('admin/termsofuse')
+  Route.get('/query', 'TermsOfUseController.getQuery').as('admin/termsofuse/query')
+  Route.get('/:id/show', 'TermsOfUseController.show').as('admin/termsofuse/show')
+  Route.post('/', 'TermsOfUseController.store').as('admin/termsofuse/store').validator('FaqRequest')
+  Route.patch('/:id/update', 'TermsOfUseController.update').as('admin/termsofuse/update').validator('FaqRequest')
+}).prefix('api/v1/admin/termsofuse').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
+// end terms of use
 // end admin route
