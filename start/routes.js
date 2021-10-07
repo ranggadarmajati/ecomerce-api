@@ -80,4 +80,11 @@ Route.group(() => {
   Route.delete('/:id/delete', 'BannerController.delete').as('admin/banner/delete')
 }).prefix('api/v1/admin/banner').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
 // end banner
+
+// contact
+Route.group(() => {
+  Route.get('/', 'ContactController.index').as('admin/contact')
+  Route.patch('/', 'ContactController.update').as('admin/contact/update').validator('ContactUpdateRequest')
+}).prefix('api/v1/admin/contact').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
+// end contact
 // end admin route
