@@ -19,7 +19,7 @@ class BannerRequest {
       title: 'required',
       description: 'required',
       link_url: 'required|url',
-      position: 'required|integer|under:10|unique:abouts',
+      position: 'required|integer|under:10|unique:banners',
       banner_pic: 'required|file|file_ext:png,jpg,jpeg|file_size:5mb|file_types:image',
     }
   }
