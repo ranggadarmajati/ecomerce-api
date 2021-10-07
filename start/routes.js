@@ -87,4 +87,14 @@ Route.group(() => {
   Route.patch('/', 'ContactController.update').as('admin/contact/update').validator('ContactUpdateRequest')
 }).prefix('api/v1/admin/contact').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
 // end contact
+
+// faq
+Route.group(() => {
+  Route.get('/', 'FaqController.index').as('admin/faq')
+  Route.get('/query', 'FaqController.getQuery').as('admin/faq/query')
+  Route.get('/:id/show', 'FaqController.show').as('admin/faq/show')
+  Route.post('/', 'FaqController.store').as('admin/faq/store').validator('FaqRequest')
+  Route.patch('/:id/update', 'FaqController.update').as('admin/faq/update').validator('FaqRequest')
+}).prefix('api/v1/admin/faq').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
+// end faq
 // end admin route
