@@ -15,7 +15,7 @@ class ContactController {
         if(!updateRes){
             return response.Wrapper( 500, false, "Update Contact failed, please try again later!" )
         }
-        return response.Wrapper( 200, true, "Update Contact Succesfully!" )
+        return response.Wrapper( 200, true, "Update Contact Succesfully!", updateRes )
     }
 }
 

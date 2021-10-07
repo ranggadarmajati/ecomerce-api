@@ -18,3 +18,4 @@ database/*.sqlite
 #public uploads
 public/uploads/images/category
 public/uploads/images/product
+public/uploads/images/banner
