@@ -120,4 +120,13 @@ Route.group(() => {
   Route.delete('/:id/delete', 'PrivacyPoliceController.delete').as('admin/privacypolice/delete')
 }).prefix('api/v1/admin/privacypolice').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
 // end privacy police
+
+// product
+Route.group(() => {
+  Route.get('/', 'ProductController.index').as('admin/product')
+  Route.get('/query', 'ProductController.getQuery').as('admin/product/query')
+  Route.get('/:id/show', 'ProductController.show').as('admin/product/show')
+  Route.post('/', 'ProductController.store').as('admin/product/store')
+}).prefix('api/v1/admin/product').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
+// end product
 // end admin route
