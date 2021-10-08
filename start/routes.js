@@ -95,6 +95,7 @@ Route.group(() => {
   Route.get('/:id/show', 'FaqController.show').as('admin/faq/show')
   Route.post('/', 'FaqController.store').as('admin/faq/store').validator('FaqRequest')
   Route.patch('/:id/update', 'FaqController.update').as('admin/faq/update').validator('FaqRequest')
+  Route.delete('/:id/delete', 'FaqController.delete').as('admin/faq/delete')
 }).prefix('api/v1/admin/faq').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
 // end faq
 
@@ -105,6 +106,7 @@ Route.group(() => {
   Route.get('/:id/show', 'TermsOfUseController.show').as('admin/termsofuse/show')
   Route.post('/', 'TermsOfUseController.store').as('admin/termsofuse/store').validator('FaqRequest')
   Route.patch('/:id/update', 'TermsOfUseController.update').as('admin/termsofuse/update').validator('FaqRequest')
+  Route.delete('/:id/delete', 'TermsOfUseController.delete').as('admin/termsofuse/delete')
 }).prefix('api/v1/admin/termsofuse').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
 // end terms of use
 
@@ -115,6 +117,7 @@ Route.group(() => {
   Route.get('/:id/show', 'PrivacyPoliceController.show').as('admin/privacypolice/show')
   Route.post('/', 'PrivacyPoliceController.store').as('admin/privacypolice/store').validator('FaqRequest')
   Route.patch('/:id/update', 'PrivacyPoliceController.update').as('admin/privacypolice/update').validator('FaqRequest')
+  Route.delete('/:id/delete', 'PrivacyPoliceController.delete').as('admin/privacypolice/delete')
 }).prefix('api/v1/admin/privacypolice').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
 // end privacy police
 // end admin route

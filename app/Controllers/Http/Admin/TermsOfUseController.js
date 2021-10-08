@@ -42,6 +42,14 @@ class TermsOfUseController {
         }
         return response.Wrapper( 200, true, "update terms_of_use data successfully!", updateRes )
     }
+
+    async delete({ response, params }) {
+        const { id } = params
+        let terms_of_use = new ModelRepository(TermsOfus)
+        let res = await terms_of_use.deleteBy('uuid', id)
+        if(!res) return response.Wrapper( 500, false, "Delete term of uses failed, please try again later!")
+        return response.Wrapper( 200, true, "Delete term of use successfully!" )
+    }
 }
 
 module.exports = TermsOfUseController
