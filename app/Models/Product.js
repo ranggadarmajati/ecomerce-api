@@ -16,6 +16,7 @@ class Product extends Model {
             if (!FieldInstance.uuid) {
                 FieldInstance.uuid = uuidv4();
             }
+            FieldInstance.slug = FieldInstance.name.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '')
         })
     }
 
@@ -44,7 +45,7 @@ class Product extends Model {
     }
 
     wishlists() {
-        return this.hasOne('App/Models/Wishlist')
+        return this.hasMany('App/Models/Wishlist')
     }
 
     order_details() {
