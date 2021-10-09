@@ -63,7 +63,7 @@ class BannerController {
         })
 
         if (!bannerPic.moved()) {
-            return profilePic.error()
+            return bannerPic.error()
         }
 
         let banner = new ModelRepository(Banner)

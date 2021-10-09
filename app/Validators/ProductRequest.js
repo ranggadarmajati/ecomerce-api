@@ -18,7 +18,7 @@ class ProductRequest {
     return {
       name: 'required',
       description: 'required',
-      gender: 'required|in:male,female,unisex',
+      gender: 'required|in:man,women,unisex',
       capital_price: 'required|integer',
       selling_price: 'required|integer',
       stock: 'integer',
@@ -35,8 +35,7 @@ class ProductRequest {
       'product_colors.*.additional_capital_price': 'integer',
       weight: 'required|integer',
       length: 'integer',
-      width: 'integer',
-      product_images: 'required|array|file|file_ext:png,jpg,jpeg|file_size:5mb|file_types:image',
+      width: 'integer'
     }
   }
 }

@@ -124,9 +124,13 @@ Route.group(() => {
 // product
 Route.group(() => {
   Route.get('/', 'ProductController.index').as('admin/product')
-  Route.get('/query', 'ProductController.getQuery').as('admin/product/query')
+  Route.get('/query', 'ProductController.getByQuery').as('admin/product/query')
   Route.get('/:id/show', 'ProductController.show').as('admin/product/show')
-  Route.post('/', 'ProductController.store').as('admin/product/store')
+  Route.post('/', 'ProductController.store').as('admin/product/store').validator('ProductRequest')
+  Route.post('/:id/upload', 'ProductController.uploadImage').as('admin/product/upload').validator('ImageUploadRequest')
+  Route.delete('/:product_id/:id/imagedeleted', 'ProductController.deleteImage').as('admin/product/imagedeleted')
+  Route.delete('/:product_id/:id/categorydeleted', 'ProductController.deleteCategory').as('admin/product/categorydeleted')
+  Route.post('/:product_id/addcategory', 'ProductController.addCategory').as('admin/product/addcategory').validator('AddCategoryProductRequest')
 }).prefix('api/v1/admin/product').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
 // end product
 // end admin route

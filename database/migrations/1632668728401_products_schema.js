@@ -51,7 +51,7 @@ class ProductsSchema extends Schema {
       table.increments()
       table.uuid('uuid').notNullable()
       table.integer('category_id').unsigned().references('id').inTable('categories').notNullable()
-      table.integer('product_id').unsigned().references('id').inTable('categories').notNullable()
+      table.integer('product_id').unsigned().references('id').inTable('products').notNullable()
       table.timestamps()
     })
 
