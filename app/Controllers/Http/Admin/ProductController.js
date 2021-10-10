@@ -252,13 +252,10 @@ class ProductController {
             product_id: product_data.id,
             category_id: category_id
         }
-        // let store = await product_category.create(obj)
-        // if (!store) return response.Wrapper(500, false, 'Failed add Category product, please try again later!')
-        try {
-            await ProductCategory.create(obj)
-        } catch (error) {
-            return response.Wrapper(500, false, 'Failed add Category product, please try again later!', error.message)            
-        }
+        
+        let store = await product_category.create(obj)
+        if (!store) return response.Wrapper(500, false, 'Failed add Category product, please try again later!')
+        
         const product = await Product.query().where('uuid', product_id)
             .with('product_categories', (builder) => {
                 builder.with('category')
@@ -272,6 +269,58 @@ class ProductController {
             .with('product_promotions')
             .fetch()
         return response.Wrapper(201, true, 'Add category product successfully!', product)
+    }
+
+    async deleteColor({ response, params }) {
+        const { id, product_id } = params
+        let product_color = new ModelRepository(ProductColor)
+        const deleted = await product_color.deleteBy('uuid', id)
+        if (!deleted) {
+            return response.Wrapper(500, false, 'Failed delete product color, please try again later!')
+        }
+        const product = await Product.query().where('uuid', product_id)
+            .with('product_categories', (builder) => {
+                builder.with('category')
+            })
+            .with('product_colors', (builder) => {
+                builder.with('color')
+            })
+            .with('product_sizes')
+            .with('images')
+            .with('product_measures')
+            .with('product_promotions')
+            .fetch()
+        return response.Wrapper(200, true, 'Delete product color successfully!', product)
+    }
+
+    async addColor({ response, params, request }) {
+        const { product_id } = params
+        const { color_id } = request.all()
+        let product_model = new ModelRepository(Product)
+        const product_data = await product_model.showBy('uuid', product_id)
+        if(!product_data) return response.Wrapper(404, false, 'Product data not found!')
+        let product_color = new ModelRepository(ProductColor)
+        const obj = {
+            product_id: product_data.id,
+            color_id: color_id
+        }
+        
+        let store = await product_color.create(obj)
+        if (!store) return response.Wrapper(500, false, 'Failed add product color, please try again later!')
+        
+        const product = await Product.query().where('uuid', product_id)
+            .with('product_categories', (builder) => {
+                builder.with('category')
+            })
+            .with('product_colors', (builder) => {
+                builder.with('color')
+            })
+            .with('product_sizes')
+            .with('images')
+            .with('product_measures')
+            .with('product_promotions')
+            .fetch()
+        return response.Wrapper(201, true, 'Add product color successfully!', product)
     }
 }
 

@@ -131,6 +131,8 @@ Route.group(() => {
   Route.delete('/:product_id/:id/imagedeleted', 'ProductController.deleteImage').as('admin/product/imagedeleted')
   Route.delete('/:product_id/:id/categorydeleted', 'ProductController.deleteCategory').as('admin/product/categorydeleted')
   Route.post('/:product_id/addcategory', 'ProductController.addCategory').as('admin/product/addcategory').validator('AddCategoryProductRequest')
+  Route.post('/:product_id/addcolor', 'ProductController.addcolor').as('admin/product/addcolor')
+  Route.delete('/:product_id/colordeleted', 'ProductColor.deleteColor').as('admin/product/colordeleted')
 }).prefix('api/v1/admin/product').namespace('Admin').middleware(['apiAuth', 'PermissionAccess:sa,a'])
 // end product
 // end admin route
