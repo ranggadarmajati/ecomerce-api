@@ -27,6 +27,7 @@
     "@adonisjs/mail": "^3.0.10",
     "@adonisjs/validator": "^5.0.6",
     "axios": "^0.22.0",
+    "bee-queue": "^1.4.0",
     "crypto": "^1.0.1",
     "crypto-js": "^4.0.0",
     "device-detector-js": "^2.2.10",
