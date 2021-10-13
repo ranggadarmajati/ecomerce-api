@@ -11,6 +11,7 @@ const HelperCrypto = use('HelperCrypto')
 const Generate = use('Generate')
 const UserToken = use('App/Models/Token')
 const Utils = use('App/Helper/Utils')
+const BeQueue = use('App/Helper/Queue')
 class AuthController {
     async login({ auth, request, response }) {
         const { email, password } = request.all()
@@ -133,7 +134,12 @@ class AuthController {
                 URI_ACTIVATION: urlActivation,
                 subject_email: 'Email Verification'
             }
-            Event.fire('new::user', userDataObject)
+            if (Env.get('QUEUE') == true || Env.get('QUEUE') == 'true') {
+                BeQueue.emailQueue(userDataObject)
+            } else {
+                Event.fire('new::user', userDataObject)
+            }
+
             const user_verification = new UserVerification()
             user_verification.token = activationKey
             await user.user_verifications().save(user_verification, trx)
@@ -207,7 +213,13 @@ class AuthController {
                 forgot_password_token: token,
                 subject_email: 'Forgot Password | Verification Code: ' + token
             }
-            Event.fire('forgot_password::user', userDataObject)
+
+            if (Env.get('QUEUE') == true || Env.get('QUEUE') == 'true') {
+                BeQueue.emailQueue(userDataObject)
+            } else {
+                Event.fire('forgot_password::user', userDataObject)
+            }
+
             return response.Wrapper(
                 200,
                 true,
