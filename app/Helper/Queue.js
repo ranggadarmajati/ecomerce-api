@@ -38,7 +38,11 @@ class BeQueue {
 // Process jobs from as many servers or processes as you like
 queue.process((job, done) => {
     console.log(`Processing job ${job.id} | job send email to: ${job.data.email}`);
-    Event.fire('new::user', job.data);
+    if(job.data.URI_ACTIVATION) {
+        Event.fire('new::user', job.data);
+    } else {
+        Event.fire('forgot_password::user', job.data);
+    }
     done();
 });
 
