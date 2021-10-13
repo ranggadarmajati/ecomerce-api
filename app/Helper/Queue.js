@@ -5,6 +5,7 @@ const Event = use('Event')
 const Queue = require('bee-queue');
 const options = {
     getEvents:true,
+    activateDelayedJobs: true,
     removeOnSuccess: true,
     redis: {
         host: Env.get('REDIS_HOST', 'localhost'),
