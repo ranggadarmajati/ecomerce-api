@@ -16,7 +16,7 @@ hooks.after.providersBooted(() => {
                 query: item.sql
             }
         }
-        console.log(logger)
+        // console.log(logger)
     });
 
     const Response = use('Adonis/Src/Response')
